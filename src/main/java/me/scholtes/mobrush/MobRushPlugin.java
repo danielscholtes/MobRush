@@ -2,9 +2,9 @@ package me.scholtes.mobrush;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MobRush extends JavaPlugin {
+public final class MobRushPlugin extends JavaPlugin {
 
-    private static MobRush instance;
+    private static MobRushPlugin instance;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -38,7 +38,7 @@ public final class MobRush extends JavaPlugin {
 
     }
 
-    public static MobRush getInstance() {
+    public static MobRushPlugin getInstance() {
         return instance;
     }
 }
