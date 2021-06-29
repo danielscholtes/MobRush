@@ -1,6 +1,6 @@
 name: MobRush
 version: ${project.version}
-main: me.scholtes.mobrush.PluginMobRush
+main: me.scholtes.mobrush.MobRushPlugin
 api-version: 1.16
 authors: [ Scholtes ]
 description: A mob rush plugin
