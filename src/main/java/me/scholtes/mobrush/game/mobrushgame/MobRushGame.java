@@ -11,7 +11,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MobRushGame implements Game, Listener {
+public class MobRushGame implements Game {
+
+    private MobRushPlugin plugin;
 
     private List<Player> players;
     private GameStatus status;
@@ -25,10 +27,12 @@ public class MobRushGame implements Game, Listener {
     /**
      * Whenever a lobby is created an instance of a game will be made
      */
-    public MobRushGame() {
+    public MobRushGame(MobRushPlugin plugin) {
+        this.plugin = plugin;
+
         this.players = new ArrayList<>();
         this.status = GameStatus.WAITING;
-        setCurrentWave(0);
+        this.currentWave = 0;
     }
 
     /**
@@ -50,15 +54,15 @@ public class MobRushGame implements Game, Listener {
         //TODO: Mob spawning logic
 
         // Determines the delay till the next wave
-        int delay = START_INTERVAL - (getCurrentWave() * INTERVAL_DECREASE);
+        int delay = START_INTERVAL - (this.currentWave * INTERVAL_DECREASE);
         delay = Math.max(delay, MIN_INTERVAL);
         this.currentWaveTask = new BukkitRunnable() {
             @Override
             public void run() {
                 nextWave();
             }
-        }.runTaskLaterAsynchronously(MobRushPlugin.getInstance(), delay * 20L).getTaskId();
-        setCurrentWave(getCurrentWave() + 1);
+        }.runTaskLaterAsynchronously(plugin, delay * 20L).getTaskId();
+        this.currentWave++;
     }
 
     /**
@@ -72,7 +76,7 @@ public class MobRushGame implements Game, Listener {
             Bukkit.getScheduler().cancelTask(currentWaveTask);
         }
         players.clear();
-        setCurrentWave(0);
+        this.currentWave = 0;
         setStatus(GameStatus.WAITING);
     }
 
@@ -103,7 +107,7 @@ public class MobRushGame implements Game, Listener {
      */
     @Override
     public GameStatus getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -111,6 +115,6 @@ public class MobRushGame implements Game, Listener {
      */
     @Override
     public List<Player> getPlayers() {
-        return players;
+        return this.players;
     }
 }
