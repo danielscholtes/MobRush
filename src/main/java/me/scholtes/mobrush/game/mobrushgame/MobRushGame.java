@@ -23,9 +23,9 @@ public class MobRushGame implements Game {
     private List<UUID> players;
     private GameStatus status;
     private int currentWave;
-    private int START_INTERVAL = 60;
-    private int INTERVAL_DECREASE = 5;
-    private int MIN_INTERVAL = 5;
+    public final static int START_INTERVAL = 60;
+    public final static int INTERVAL_DECREASE = 5;
+    public final static int MIN_INTERVAL = 5;
     private int currentWaveTask = -1;
 
     /**
