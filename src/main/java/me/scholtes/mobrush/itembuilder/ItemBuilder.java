@@ -30,12 +30,12 @@ public class ItemBuilder {
         this.enchantments = new HashMap<>();
     }
 
-    public ItemBuilder withName(String name) {
+    public ItemBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
-    public ItemBuilder withLore(List<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         this.lore = lore;
         return this;
     }
@@ -56,7 +56,7 @@ public class ItemBuilder {
     }
 
     /**
-     * Builds the item
+     * Creates a new {@link ItemStack} with the properties that were set
      *
      * @return The {@link ItemStack item}
      */
