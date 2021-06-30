@@ -71,18 +71,10 @@ public class ItemBuilder {
             meta.setDisplayName(StringUtils.color(name));
         }
 
-        if (!enchantments.isEmpty()) {
-            for (Enchantment enchantment : enchantments.keySet()) {
-                meta.addEnchant(enchantment, enchantments.get(enchantment), true);
-            }
-        }
-
-        if (!flags.isEmpty()) {
-            flags.forEach(meta::addItemFlags);
-        }
+        enchantments.forEach((enchant, lvl) -> meta.addEnchant(enchant, lvl, true));
+        flags.forEach(meta::addItemFlags);
 
         itemStack.setItemMeta(meta);
-
         return itemStack;
     }
 

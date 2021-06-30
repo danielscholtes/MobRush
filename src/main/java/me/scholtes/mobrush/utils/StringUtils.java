@@ -3,7 +3,7 @@ package me.scholtes.mobrush.utils;
 import org.bukkit.ChatColor;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 
 public class StringUtils {
 
@@ -26,7 +26,7 @@ public class StringUtils {
     public static List<String> color(List<String> stringList) {
         return stringList.stream()
                         .map(StringUtils::color)
-                        .collect(Collectors.toList());
+                        .collect(toList());
     }
 
 }
