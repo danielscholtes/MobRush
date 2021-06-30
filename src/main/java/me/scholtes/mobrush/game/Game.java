@@ -3,6 +3,7 @@ package me.scholtes.mobrush.game;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface Game {
 
@@ -14,6 +15,6 @@ public interface Game {
 
     GameStatus getStatus();
 
-    List<Player> getPlayers();
+    List<UUID> getPlayers();
 
 }

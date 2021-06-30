@@ -10,19 +10,23 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MobRushGame implements Game {
 
     private MobRushPlugin plugin;
 
-    private List<Player> players;
+    /*
+    TODO: Data for points and kit selection will be retrieved from a data storage class
+     (dataStorage.getKit(UUID), dataStorage.getPoints(UUID) etc.)
+     */
+    private List<UUID> players;
     private GameStatus status;
     private int currentWave;
     private int START_INTERVAL = 60;
     private int INTERVAL_DECREASE = 5;
     private int MIN_INTERVAL = 5;
     private int currentWaveTask = -1;
-    //TODO: Add a Map<UUID, Kit>
 
     /**
      * Whenever a lobby is created an instance of a game will be made
@@ -61,7 +65,7 @@ public class MobRushGame implements Game {
             public void run() {
                 nextWave();
             }
-        }.runTaskLaterAsynchronously(plugin, delay * 20L).getTaskId();
+        }.runTaskLater(plugin, delay * 20L).getTaskId();
         this.currentWave++;
     }
 
@@ -114,7 +118,7 @@ public class MobRushGame implements Game {
      * Gets the players currently in the game
      */
     @Override
-    public List<Player> getPlayers() {
+    public List<UUID> getPlayers() {
         return this.players;
     }
 }
