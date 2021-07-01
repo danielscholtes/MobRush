@@ -38,12 +38,11 @@ public class GameTaskManager {
     }
 
     public void cancelTask(Class<?> clazz) {
-        Sets.newHashSet(tasks)
-                .forEach((task) -> {
-                    if (task.getClass() == clazz) {
-                        task.cancel();
-                        tasks.remove(task);
-                    }
+        Sets.newHashSet(tasks).stream()
+                .filter(task -> task.getClass() == clazz)
+                .forEach(task -> {
+                    task.cancel();
+                    tasks.remove(task);
                 });
     }
 
