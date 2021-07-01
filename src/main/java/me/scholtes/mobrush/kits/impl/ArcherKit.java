@@ -10,12 +10,14 @@ public class ArcherKit implements StartKit, RoundKit {
 
     @Override
     public void nextRound(Player player) {
-        player.getInventory().addItem(new ItemBuilder(Material.ARROW, 4).build());
+        player.getInventory().addItem(new ItemBuilder(Material.ARROW, 4)
+                                            .build());
     }
 
     @Override
     public void onStart(Player player) {
-        player.getInventory().addItem(new ItemBuilder(Material.BOW).build());
+        player.getInventory().addItem(new ItemBuilder(Material.BOW)
+                                            .build());
     }
 
 }
