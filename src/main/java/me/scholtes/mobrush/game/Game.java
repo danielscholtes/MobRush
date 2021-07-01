@@ -1,7 +1,7 @@
 package me.scholtes.mobrush.game;
 
 import me.scholtes.mobrush.MobRushPlugin;
-import me.scholtes.mobrush.game.task.WaveTaskManager;
+import me.scholtes.mobrush.game.task.GameTaskManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,13 @@ public abstract class Game {
     private GameStatus status;
     private final List<UUID> players;
 
-    public Game() {
+    private final GameTaskManager taskManager;
+
+    public Game(MobRushPlugin plugin) {
         this.players = new ArrayList<>();
         this.status = GameStatus.WAITING;
+
+        this.taskManager = new GameTaskManager(plugin, this);
     }
 
     public abstract void startGame();
@@ -31,6 +35,10 @@ public abstract class Game {
 
     public List<UUID> getPlayers() {
         return this.players;
+    }
+
+    public GameTaskManager getTaskManager() {
+        return this.taskManager;
     }
 
 }

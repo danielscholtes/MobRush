@@ -3,11 +3,11 @@ package me.scholtes.mobrush.game.mobrushgame;
 import me.scholtes.mobrush.MobRushPlugin;
 import me.scholtes.mobrush.game.GameStatus;
 import me.scholtes.mobrush.game.WaveGame;
-
-import java.util.List;
-import java.util.UUID;
+import me.scholtes.mobrush.game.task.WaveTask;
 
 public class MobRushGame extends WaveGame {
+
+    private final MobRushPlugin plugin;
 
     /**
      * Whenever a lobby is created an instance of a game will be made
@@ -15,6 +15,7 @@ public class MobRushGame extends WaveGame {
     public MobRushGame(MobRushPlugin plugin) {
         //TODO: Add config, for now values are hardcoded
         super(plugin, 60, 5, 5);
+        this.plugin = plugin;
     }
 
     /**
@@ -26,7 +27,7 @@ public class MobRushGame extends WaveGame {
 
         //TODO: Teleport players to world
         //TODO: Add kit selection (10 seconds to choose kit, otherwise defaults to knight kit)
-        getTaskManager().startWaveTask();
+        getTaskManager().runTaskTimer(new WaveTask(this), 0, 20);
     }
 
     /**
@@ -43,7 +44,7 @@ public class MobRushGame extends WaveGame {
     @Override
     public void endGame() {
         //TODO: Send the remaining player(s) back to the lobby
-        getTaskManager().cancelTask();
+        getTaskManager().cancelTask(WaveTask.class);
 
         getPlayers().clear();
         setCurrentWave(1);

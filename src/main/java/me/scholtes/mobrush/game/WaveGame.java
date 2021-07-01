@@ -1,7 +1,6 @@
 package me.scholtes.mobrush.game;
 
 import me.scholtes.mobrush.MobRushPlugin;
-import me.scholtes.mobrush.game.task.WaveTaskManager;
 
 public abstract class WaveGame extends Game {
 
@@ -10,16 +9,13 @@ public abstract class WaveGame extends Game {
     private final int intervalDecrease;
     private final int minInterval;
 
-    private final WaveTaskManager taskManager;
-
     public WaveGame(MobRushPlugin plugin, int startInterval, int intervalDecrease, int minInterval) {
-        super();
+        super(plugin);
+
         this.startInterval = startInterval;
         this.intervalDecrease = intervalDecrease;
         this.minInterval = minInterval;
         this.currentWave = 1;
-
-        this.taskManager = new WaveTaskManager(plugin, this);
     }
 
     public abstract void startWave();
@@ -36,10 +32,6 @@ public abstract class WaveGame extends Game {
         // The reason its (current wave - 1) is because the first delay should be the start interval
         int delay = this.startInterval - ((this.currentWave - 1) * this.intervalDecrease);
         return Math.max(delay, this.minInterval);
-    }
-
-    public WaveTaskManager getTaskManager() {
-        return this.taskManager;
     }
 
 }

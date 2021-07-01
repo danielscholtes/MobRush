@@ -8,7 +8,7 @@ public class WaveTask extends BukkitRunnable {
 
     private final WaveGame game;
 
-    int secondsPassed;
+    private int secondsPassed;
 
     public WaveTask(WaveGame game) {
         this.game = game;
@@ -18,11 +18,15 @@ public class WaveTask extends BukkitRunnable {
     @Override
     public void run() {
         // Checks if the seconds passed from last delay has reached the current delay
-        if (secondsPassed >= game.getWaveDelay()) {
-            game.startWave();
-            game.setCurrentWave(game.getCurrentWave() + 1);
-            this.secondsPassed = 0;
+        if (secondsPassed < game.getWaveDelay()) {
+            secondsPassed++;
+            return;
         }
+
+        game.startWave();
+        game.setCurrentWave(game.getCurrentWave() + 1);
+        this.secondsPassed = 0;
     }
+
 
 }
