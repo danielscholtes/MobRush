@@ -9,6 +9,7 @@ public class MageKit implements RoundKit {
 
     @Override
     public void nextRound(Player player) {
-        player.getInventory().addItem(new ItemBuilder(Material.ENDER_PEARL).build());
+        player.getInventory().addItem(new ItemBuilder(Material.ENDER_PEARL)
+                                            .build());
     }
 }
