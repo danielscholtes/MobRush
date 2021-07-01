@@ -1,20 +1,36 @@
 package me.scholtes.mobrush.game;
 
-import org.bukkit.entity.Player;
+import me.scholtes.mobrush.MobRushPlugin;
+import me.scholtes.mobrush.game.task.WaveTaskManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public interface Game {
+public abstract class Game {
 
-    void startGame();
+    private GameStatus status;
+    private final List<UUID> players;
 
-    void endGame();
+    public Game() {
+        this.players = new ArrayList<>();
+        this.status = GameStatus.WAITING;
+    }
 
-    void setStatus(GameStatus status);
+    public abstract void startGame();
 
-    GameStatus getStatus();
+    public abstract void endGame();
 
-    List<UUID> getPlayers();
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
+
+    public GameStatus getStatus() {
+        return this.status;
+    }
+
+    public List<UUID> getPlayers() {
+        return this.players;
+    }
 
 }
