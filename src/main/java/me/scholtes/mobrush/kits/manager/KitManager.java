@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class KitManager {
 
-    private Map<KitType, Kit> kits;
+    private final Map<KitType, Kit> kits;
 
     public KitManager() {
         kits = new HashMap<>();
