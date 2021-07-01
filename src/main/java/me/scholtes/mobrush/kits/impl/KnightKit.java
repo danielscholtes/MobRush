@@ -9,7 +9,8 @@ public class KnightKit implements StartKit {
 
     @Override
     public void onStart(Player player) {
-        player.getInventory().addItem(new ItemBuilder(Material.STONE_SWORD).build());
+        player.getInventory().addItem(new ItemBuilder(Material.STONE_SWORD)
+                                            .build());
     }
 
 }
