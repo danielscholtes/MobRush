@@ -3,6 +3,7 @@ package me.scholtes.mobrush.game.mobrushgame;
 import me.scholtes.mobrush.MobRushPlugin;
 import me.scholtes.mobrush.game.Game;
 import me.scholtes.mobrush.game.GameStatus;
+import me.scholtes.mobrush.game.task.GameTaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MobRushGame implements Game {
+public class MobRushGame implements WaveGame {
 
-    private MobRushPlugin plugin;
+    private GameTaskManager taskManager;
 
     /*
     TODO: Data for points and kit selection will be retrieved from a data storage class
@@ -23,20 +24,25 @@ public class MobRushGame implements Game {
     private List<UUID> players;
     private GameStatus status;
     private int currentWave;
-    public final static int START_INTERVAL = 60;
-    public final static int INTERVAL_DECREASE = 5;
-    public final static int MIN_INTERVAL = 5;
-    private int currentWaveTask = -1;
+
+    private int startInterval;
+    private int intervalDecrease;
+    private int minInterval;
 
     /**
      * Whenever a lobby is created an instance of a game will be made
      */
-    public MobRushGame(MobRushPlugin plugin) {
-        this.plugin = plugin;
+    public MobRushGame(GameTaskManager taskManager) {
+        this.taskManager = taskManager;
 
         this.players = new ArrayList<>();
         this.status = GameStatus.WAITING;
-        this.currentWave = 0;
+        this.currentWave = 1;
+
+        //TODO: Add config, for now values are hardcoded
+        this.startInterval = 60;
+        this.intervalDecrease = 5;
+        this.minInterval = 5;
     }
 
     /**
@@ -48,25 +54,30 @@ public class MobRushGame implements Game {
 
         //TODO: Teleport players to world
         //TODO: Add kit selection (10 seconds to choose kit, otherwise defaults to knight kit)
+        taskManager.startWaveTask(this);
     }
 
     /**
-     * Progresses to the next wave and adds a runnable that will
-     * decrease by 5 seconds after every wave. The runnable will begin then next wave
+     * Spawns in the mobs for the wave
      */
-    private void nextWave() {
-        //TODO: Mob spawning logic
+    @Override
+    public void startWave() {
+        //TODO: Add mob spawning
+    }
 
-        // Determines the delay till the next wave
-        int delay = START_INTERVAL - (this.currentWave * INTERVAL_DECREASE);
-        delay = Math.max(delay, MIN_INTERVAL);
-        this.currentWaveTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                nextWave();
-            }
-        }.runTaskLater(plugin, delay * 20L).getTaskId();
-        this.currentWave++;
+    @Override
+    public int getStartInterval() {
+        return this.startInterval;
+    }
+
+    @Override
+    public int getIntervalDecrease() {
+        return this.intervalDecrease;
+    }
+
+    @Override
+    public int getMinInterval() {
+        return this.minInterval;
     }
 
     /**
@@ -75,26 +86,26 @@ public class MobRushGame implements Game {
     @Override
     public void endGame() {
         //TODO: Send the remaining player(s) back to the lobby
+        taskManager.cancelTask(this);
 
-        if (currentWaveTask != -1) {
-            Bukkit.getScheduler().cancelTask(currentWaveTask);
-        }
         players.clear();
-        this.currentWave = 0;
+        this.currentWave = 1;
         setStatus(GameStatus.WAITING);
     }
 
     /**
      * Sets the current wave
      */
-    private void setCurrentWave(int wave) {
+    @Override
+    public void setCurrentWave(int wave) {
         this.currentWave = wave;
     }
 
     /**
      * Gets the current wave
      */
-    private int getCurrentWave() {
+    @Override
+    public int getCurrentWave() {
         return this.currentWave;
     }
 

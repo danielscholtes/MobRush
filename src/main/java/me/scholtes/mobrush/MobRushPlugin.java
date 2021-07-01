@@ -1,10 +1,13 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.game.task.GameTaskManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MobRushPlugin extends JavaPlugin {
 
     private static MobRushPlugin instance;
+
+    private GameTaskManager taskManager;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -13,6 +16,8 @@ public final class MobRushPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        taskManager = new GameTaskManager(this);
 
         saveDefaultConfig();
         registerCommands();
