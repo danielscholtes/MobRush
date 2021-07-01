@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 
 public class MobRushListener implements Listener {
 
-    private MobRushGame game;
+    private final MobRushGame game;
 
     public MobRushListener(MobRushGame game) {
         this.game = game;
