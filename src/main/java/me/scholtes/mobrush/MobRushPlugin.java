@@ -1,10 +1,12 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.kits.manager.KitManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MobRushPlugin extends JavaPlugin {
 
     private static MobRushPlugin instance;
+    private KitManager kitManager;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -13,6 +15,7 @@ public final class MobRushPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        kitManager = new KitManager();
 
         saveDefaultConfig();
         registerCommands();
@@ -21,21 +24,27 @@ public final class MobRushPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
     }
 
     /**
      * Registers the commands
      */
     private  void registerCommands() {
-
     }
 
     /**
      * Registers the listeners
      */
     private void registerListeners() {
+    }
 
+    /**
+     * Gets the {@link KitManager kit manager}
+     *
+     * @return Instance of the {@link KitManager kit manager}
+     */
+    public KitManager getKitManager() {
+        return kitManager;
     }
 
     public static MobRushPlugin getInstance() {
