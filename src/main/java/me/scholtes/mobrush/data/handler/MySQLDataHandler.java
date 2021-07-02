@@ -7,8 +7,8 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 public class MySQLDataHandler {
 
-    private Jdbi jdbi;
-    private HikariDataSource dataSource;
+    private final Jdbi jdbi;
+    private final HikariDataSource dataSource;
 
     /**
      * Initializes and connects to the database
