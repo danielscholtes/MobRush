@@ -1,14 +1,21 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.data.dao.GamePlayerDao;
 import me.scholtes.mobrush.data.handler.MySQLDataHandler;
+import me.scholtes.mobrush.game.player.GamePlayer;
+import me.scholtes.mobrush.kits.Kit;
+import me.scholtes.mobrush.kits.KitType;
 import me.scholtes.mobrush.kits.manager.KitManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 public final class MobRushPlugin extends JavaPlugin {
 
     private static MobRushPlugin instance;
     private KitManager kitManager;
-    private MySQLDataHandler mySQLDataHandler;
+    private MySQLDataHandler mysqlDataHandler;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -18,16 +25,20 @@ public final class MobRushPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         kitManager = new KitManager();
-        mySQLDataHandler = new MySQLDataHandler(this);
+        mysqlDataHandler = new MySQLDataHandler(this);
 
         saveDefaultConfig();
         registerCommands();
         registerListeners();
+
+        Bukkit.getScheduler().runTaskAsynchronously(this, () ->
+                mysqlDataHandler.getJdbi().useExtension(GamePlayerDao.class, GamePlayerDao::createTable));
+
     }
 
     @Override
     public void onDisable() {
-        mySQLDataHandler.close();
+        mysqlDataHandler.close();
     }
 
     /**

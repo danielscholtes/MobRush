@@ -4,10 +4,12 @@ import me.scholtes.mobrush.kits.KitType;
 
 public class GamePlayer {
 
+    private int id;
     private int points;
     private KitType kit;
 
-    public GamePlayer(int points, KitType kit) {
+    public GamePlayer(int id, int points, KitType kit) {
+        this.id = id;
         this.points = points;
         this.kit = kit;
     }
@@ -34,5 +36,9 @@ public class GamePlayer {
 
     public KitType getKit() {
         return this.kit;
+    }
+
+    public int getId() {
+        return this.id;
     }
 }
