@@ -27,6 +27,7 @@ public final class MobRushPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        mySQLDataHandler.close();
     }
 
     /**

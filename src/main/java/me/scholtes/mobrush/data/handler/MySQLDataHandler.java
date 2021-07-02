@@ -36,6 +36,14 @@ public class MySQLDataHandler {
         jdbi.installPlugin(new SqlObjectPlugin());
     }
 
+    public void close() {
+        if (this.dataSource == null || !this.dataSource.isRunning()) {
+            return;
+        }
+
+        this.dataSource.close();
+    }
+
     public HikariDataSource getDataSource() {
         return this.dataSource;
     }
