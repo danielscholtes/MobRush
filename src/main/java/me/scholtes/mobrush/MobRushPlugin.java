@@ -1,5 +1,6 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.data.handler.MySQLDataHandler;
 import me.scholtes.mobrush.kits.manager.KitManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -7,6 +8,7 @@ public final class MobRushPlugin extends JavaPlugin {
 
     private static MobRushPlugin instance;
     private KitManager kitManager;
+    private MySQLDataHandler mySQLDataHandler;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -16,6 +18,7 @@ public final class MobRushPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         kitManager = new KitManager();
+        mySQLDataHandler = new MySQLDataHandler(this);
 
         saveDefaultConfig();
         registerCommands();
