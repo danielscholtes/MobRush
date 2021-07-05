@@ -1,12 +1,18 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.game.mobrushgame.MobRushGame;
 import me.scholtes.mobrush.kits.manager.KitManager;
+import me.scholtes.mobrush.lobby.Lobby;
+import me.scholtes.mobrush.lobby.listener.LobbyListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MobRushPlugin extends JavaPlugin {
 
     private static MobRushPlugin instance;
     private KitManager kitManager;
+
+    private MobRushGame mobRushGame;
+    private Lobby lobby;
 
     /**
      * Enables the plugin and registers commands and listeners
@@ -20,6 +26,9 @@ public final class MobRushPlugin extends JavaPlugin {
         saveDefaultConfig();
         registerCommands();
         registerListeners();
+
+        mobRushGame = new MobRushGame(this);
+        lobby = new Lobby(this, mobRushGame);
     }
 
     @Override
@@ -36,6 +45,8 @@ public final class MobRushPlugin extends JavaPlugin {
      * Registers the listeners
      */
     private void registerListeners() {
+        //Lobby Listener
+        getServer().getPluginManager().registerEvents(new LobbyListener(lobby), this);
     }
 
     /**
