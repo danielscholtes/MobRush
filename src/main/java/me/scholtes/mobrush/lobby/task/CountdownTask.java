@@ -4,6 +4,7 @@ import me.scholtes.mobrush.game.Game;
 import me.scholtes.mobrush.game.GameStatus;
 import me.scholtes.mobrush.lobby.Lobby;
 import me.scholtes.mobrush.utils.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -23,18 +24,15 @@ public class CountdownTask extends BukkitRunnable {
     @Override
     public void run() {
         if (countdown > 0) {
-            lobby.broadcast(StringUtils.color("&aGame starting in " + countdown + " seconds!"));
+            lobby.broadcast(ChatColor.GREEN + "Game starting in " + countdown + " seconds!");
             countdown--;
         }
 
-        for (UUID uuid : lobby.getPlayers()) {
-            game.addPlayer(uuid);
-        }
+        lobby.getPlayers().forEach(game::addPlayer);
+        lobby.getPlayers().clear();
 
         game.setStatus(GameStatus.RUNNING);
         game.startGame();
-
-        lobby.getPlayers().clear();
 
         lobby.getTaskManager().cancelTask(this.getClass());
     }

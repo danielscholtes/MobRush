@@ -7,6 +7,7 @@ import me.scholtes.mobrush.lobby.task.CountdownTask;
 import me.scholtes.mobrush.taskmanager.TaskManager;
 import me.scholtes.mobrush.utils.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -46,7 +47,7 @@ public class Lobby {
             return;
         }
 
-        broadcast(StringUtils.color("&cGame cancelled! Not enough players to start"));
+        broadcast(ChatColor.RED + "Game cancelled! Not enough players to start");
         game.setStatus(GameStatus.WAITING);
         taskManager.cancelTask(CountdownTask.class);
     }
