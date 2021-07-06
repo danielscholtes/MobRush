@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class LobbyListener implements Listener {
 
-    private Lobby lobby;
+    private final Lobby lobby;
 
     public LobbyListener(Lobby lobby) {
         this.lobby = lobby;

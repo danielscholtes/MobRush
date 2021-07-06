@@ -3,19 +3,17 @@ package me.scholtes.mobrush.game;
 import me.scholtes.mobrush.MobRushPlugin;
 import me.scholtes.mobrush.taskmanager.TaskManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class Game {
 
     private GameStatus status;
-    private final List<UUID> players;
+    private final Set<UUID> players;
 
     private final TaskManager taskManager;
 
     public Game(MobRushPlugin plugin) {
-        this.players = new ArrayList<>();
+        this.players = new HashSet<>();
         this.status = GameStatus.WAITING;
 
         this.taskManager = new TaskManager(plugin);
@@ -33,7 +31,7 @@ public abstract class Game {
         return this.status;
     }
 
-    public List<UUID> getPlayers() {
+    public Set<UUID> getPlayers() {
         return this.players;
     }
 
