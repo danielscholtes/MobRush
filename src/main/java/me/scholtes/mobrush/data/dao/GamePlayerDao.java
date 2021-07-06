@@ -1,6 +1,5 @@
 package me.scholtes.mobrush.data.dao;
 
-import me.scholtes.mobrush.game.Game;
 import me.scholtes.mobrush.game.player.GamePlayer;
 import me.scholtes.mobrush.kits.KitType;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -11,10 +10,11 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 public interface GamePlayerDao {
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS players (" +
-                    "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+                    "id INT NOT NULL AUTO_INCREMENT," +
                     "uuid VARCHAR(36) NOT NULL UNIQUE," +
                     "points INT NOT NULL," +
-                    "kit VARCHAR(16) NOT NULL" +
+                    "kit VARCHAR(16) NOT NULL," +
+                    "PRIMARY KEY (id)" +
                 ")")
     void createTable();
 
