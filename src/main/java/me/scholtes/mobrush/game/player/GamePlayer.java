@@ -1,15 +1,21 @@
 package me.scholtes.mobrush.game.player;
 
 import me.scholtes.mobrush.kits.KitType;
+import org.jdbi.v3.core.mapper.reflect.JdbiConstructor;
+
+import java.util.UUID;
+
 
 public class GamePlayer {
 
-    private int id;
+    // UUID is saved String as Jdbi can't convert a UUID to String
+    private String uuid;
     private int points;
     private KitType kit;
 
-    public GamePlayer(int id, int points, KitType kit) {
-        this.id = id;
+    @JdbiConstructor
+    public GamePlayer(UUID uuid, int points, KitType kit) {
+        this.uuid = uuid.toString();
         this.points = points;
         this.kit = kit;
     }
@@ -38,7 +44,7 @@ public class GamePlayer {
         return this.kit;
     }
 
-    public int getId() {
-        return this.id;
+    public String getUUID() {
+        return this.uuid;
     }
 }
