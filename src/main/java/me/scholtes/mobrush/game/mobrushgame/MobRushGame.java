@@ -7,15 +7,12 @@ import me.scholtes.mobrush.game.task.WaveTask;
 
 public class MobRushGame extends WaveGame {
 
-    private final MobRushPlugin plugin;
-
     /**
      * Whenever a lobby is created an instance of a game will be made
      */
     public MobRushGame(MobRushPlugin plugin) {
         //TODO: Add config, for now values are hardcoded
         super(plugin, 60, 5, 5);
-        this.plugin = plugin;
     }
 
     /**
