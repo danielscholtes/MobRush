@@ -7,6 +7,7 @@ import me.scholtes.mobrush.lobby.Lobby;
 import me.scholtes.mobrush.lobby.listener.LobbyListener;
 import me.scholtes.mobrush.data.dao.GamePlayerDao;
 import me.scholtes.mobrush.data.handler.MySQLDataHandler;
+import me.scholtes.mobrush.utils.AsyncUtil;
 import org.bukkit.Bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +18,7 @@ public final class MobRushPlugin extends JavaPlugin {
     private KitManager kitManager;
     private MySQLDataHandler mysqlDataHandler;
     private DataStorage dataStorage;
+    private AsyncUtil asyncUtil;
 
     private MobRushGame mobRushGame;
     private Lobby lobby;
@@ -30,7 +32,8 @@ public final class MobRushPlugin extends JavaPlugin {
         instance = this;
         kitManager = new KitManager();
         mysqlDataHandler = new MySQLDataHandler(this);
-        dataStorage = new DataStorage(this, mysqlDataHandler.getJdbi());
+        asyncUtil = new AsyncUtil(this);
+        dataStorage = new DataStorage(asyncUtil, mysqlDataHandler.getJdbi());
 
         mobRushGame = new MobRushGame(this);
         lobby = new Lobby(this, mobRushGame);
@@ -39,8 +42,7 @@ public final class MobRushPlugin extends JavaPlugin {
         registerCommands();
         registerListeners();
       
-        Bukkit.getScheduler().runTaskAsynchronously(this, () ->
-                mysqlDataHandler.getJdbi().useExtension(GamePlayerDao.class, GamePlayerDao::createTable));
+        asyncUtil.runTask(() -> mysqlDataHandler.getJdbi().useExtension(GamePlayerDao.class, GamePlayerDao::createTable));
     }
 
     @Override
