@@ -1,24 +1,21 @@
-package me.scholtes.mobrush.game.task;
+package me.scholtes.mobrush.taskmanager;
 
 import com.google.common.collect.Sets;
 import me.scholtes.mobrush.MobRushPlugin;
-import me.scholtes.mobrush.game.Game;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class GameTaskManager {
+public class TaskManager {
 
     private final MobRushPlugin plugin;
-    private final Game game;
 
     private final Set<BukkitRunnable> tasks;
 
-    public GameTaskManager(MobRushPlugin plugin, Game game) {
+    public TaskManager(MobRushPlugin plugin) {
         this.plugin = plugin;
-        this.game = game;
         this.tasks = new HashSet<>();
     }
 

@@ -1,12 +1,14 @@
 package me.scholtes.mobrush;
 
+import me.scholtes.mobrush.game.mobrushgame.MobRushGame;
+import me.scholtes.mobrush.kits.manager.KitManager;
+import me.scholtes.mobrush.lobby.Lobby;
+import me.scholtes.mobrush.lobby.listener.LobbyListener;
 import me.scholtes.mobrush.data.dao.GamePlayerDao;
 import me.scholtes.mobrush.data.handler.MySQLDataHandler;
 import me.scholtes.mobrush.game.player.GamePlayer;
-import me.scholtes.mobrush.kits.Kit;
-import me.scholtes.mobrush.kits.KitType;
-import me.scholtes.mobrush.kits.manager.KitManager;
 import org.bukkit.Bukkit;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
@@ -17,6 +19,9 @@ public final class MobRushPlugin extends JavaPlugin {
     private KitManager kitManager;
     private MySQLDataHandler mysqlDataHandler;
 
+    private MobRushGame mobRushGame;
+    private Lobby lobby;
+
     /**
      * Enables the plugin and registers commands and listeners
      * TODO: Initiliaze database, storage, lobby etc.
@@ -26,14 +31,16 @@ public final class MobRushPlugin extends JavaPlugin {
         instance = this;
         kitManager = new KitManager();
         mysqlDataHandler = new MySQLDataHandler(this);
+      
+        mobRushGame = new MobRushGame(this);
+        lobby = new Lobby(this, mobRushGame);
 
         saveDefaultConfig();
         registerCommands();
         registerListeners();
-
+      
         Bukkit.getScheduler().runTaskAsynchronously(this, () ->
                 mysqlDataHandler.getJdbi().useExtension(GamePlayerDao.class, GamePlayerDao::createTable));
-
     }
 
     @Override
@@ -51,6 +58,8 @@ public final class MobRushPlugin extends JavaPlugin {
      * Registers the listeners
      */
     private void registerListeners() {
+        //Lobby Listener
+        getServer().getPluginManager().registerEvents(new LobbyListener(lobby), this);
     }
 
     /**
