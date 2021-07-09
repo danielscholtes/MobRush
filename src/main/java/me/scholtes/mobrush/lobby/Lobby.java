@@ -5,7 +5,6 @@ import me.scholtes.mobrush.game.Game;
 import me.scholtes.mobrush.game.GameStatus;
 import me.scholtes.mobrush.lobby.task.CountdownTask;
 import me.scholtes.mobrush.taskmanager.TaskManager;
-import me.scholtes.mobrush.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,6 +32,9 @@ public class Lobby {
         this.taskManager = new TaskManager(plugin);
     }
 
+    /**
+     * Starts the countdown till the game
+     */
     public void startCountdown() {
         if (game.getStatus() != GameStatus.WAITING) {
             return;
@@ -42,6 +44,9 @@ public class Lobby {
         taskManager.runTaskTimer(new CountdownTask(this), 0, countdownTime * 20);
     }
 
+    /**
+     * Stops the countdown till the game
+     */
     public void stopCountdown() {
         if (game.getStatus() != GameStatus.STARTING) {
             return;
@@ -52,6 +57,9 @@ public class Lobby {
         taskManager.cancelTask(CountdownTask.class);
     }
 
+    /**
+     * Checks if the countdown can start
+     */
     public boolean canStartCountdown() {
         return players.size() >= minPlayers;
     }
@@ -88,6 +96,9 @@ public class Lobby {
         return this.countdownTime;
     }
 
+    /**
+     * Broadcasts a message to all players in the lobby
+     */
     public void broadcast(String message) {
         for (UUID uuid : players) {
             Player player = Bukkit.getPlayer(uuid);
