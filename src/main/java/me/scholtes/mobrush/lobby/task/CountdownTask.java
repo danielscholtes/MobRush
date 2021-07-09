@@ -3,11 +3,8 @@ package me.scholtes.mobrush.lobby.task;
 import me.scholtes.mobrush.game.Game;
 import me.scholtes.mobrush.game.GameStatus;
 import me.scholtes.mobrush.lobby.Lobby;
-import me.scholtes.mobrush.utils.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.UUID;
 
 public class CountdownTask extends BukkitRunnable {
 

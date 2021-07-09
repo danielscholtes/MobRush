@@ -17,7 +17,6 @@ public class DataStorage {
     private final Jdbi jdbi;
     private final MobRushPlugin plugin;
 
-
     private Map<UUID, GamePlayer> players;
 
     public DataStorage(MobRushPlugin plugin, Jdbi jdbi) {
