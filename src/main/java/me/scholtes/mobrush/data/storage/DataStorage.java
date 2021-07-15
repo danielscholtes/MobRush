@@ -3,8 +3,7 @@ package me.scholtes.mobrush.data.storage;
 import me.scholtes.mobrush.data.dao.GamePlayerDao;
 import me.scholtes.mobrush.game.player.GamePlayer;
 import me.scholtes.mobrush.kits.KitType;
-import me.scholtes.mobrush.utils.AsyncUtil;
-import org.bukkit.Bukkit;
+import me.scholtes.mobrush.utils.AsyncHelper;
 import org.jdbi.v3.core.Jdbi;
 
 import java.util.HashMap;
@@ -15,13 +14,13 @@ import java.util.UUID;
 public class DataStorage {
 
     private final Jdbi jdbi;
-    private final AsyncUtil asyncUtil;
+    private final AsyncHelper asyncHelper;
 
     private Map<UUID, GamePlayer> players;
 
-    public DataStorage(AsyncUtil asyncUtil, Jdbi jdbi) {
+    public DataStorage(AsyncHelper asyncHelper, Jdbi jdbi) {
         this.jdbi = jdbi;
-        this.asyncUtil = asyncUtil;
+        this.asyncHelper = asyncHelper;
         players = new HashMap<>();
     }
 
@@ -29,7 +28,7 @@ public class DataStorage {
      * Loads the player data from the database
      */
     public void loadPlayer(UUID uuid) {
-        asyncUtil.runTask(() -> {
+        asyncHelper.runTask(() -> {
             Optional<GamePlayer> gamePlayerOptional = jdbi.withExtension(GamePlayerDao.class,
                     dao -> dao.getGamePlayer(uuid.toString()));
 
@@ -54,45 +53,14 @@ public class DataStorage {
      * Saves the player to the database
      */
     public void savePlayer(UUID uuid) {
-        asyncUtil.runTask(() -> jdbi.useExtension(GamePlayerDao.class, dao -> dao.insertPlayer(players.get(uuid))));
+        asyncHelper.runTask(() -> jdbi.useExtension(GamePlayerDao.class, dao -> dao.insertPlayer(players.get(uuid))));
     }
 
     /**
-     * Gets the players current points
+     * Gets the GamePlayer of the UUID
      */
-    public int getPoints(UUID uuid) {
-        return players.get(uuid).getPoints();
-    }
-
-    /**
-     * Adds points to the player
-     */
-    public void addPoints(UUID uuid, int points) {
-        players.get(uuid).addPoints(points);
-        savePlayer(uuid);
-    }
-
-    /**
-     * Removes points from the player
-     */
-    public void removePoints(UUID uuid, int points) {
-        players.get(uuid).addPoints(points);
-        savePlayer(uuid);
-    }
-
-    /**
-     * Returns the currently selected kit of the player
-     */
-    public KitType getKit(UUID uuid, KitType kit) {
-        return players.get(uuid).getKit();
-    }
-
-    /**
-     * Returns the currently selected kit of the player
-     */
-    public void setKit(UUID uuid, KitType kit) {
-        players.get(uuid).setKit(kit);
-        savePlayer(uuid);
+    public GamePlayer getGamePlayer(UUID uuid) {
+        return players.get(uuid);
     }
 
 }

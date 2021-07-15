@@ -3,11 +3,11 @@ package me.scholtes.mobrush.utils;
 import me.scholtes.mobrush.MobRushPlugin;
 import org.bukkit.Bukkit;
 
-public class AsyncUtil {
+public class AsyncHelper {
 
     private final MobRushPlugin plugin;
 
-    public AsyncUtil(MobRushPlugin plugin) {
+    public AsyncHelper(MobRushPlugin plugin) {
         this.plugin = plugin;
     }
 
