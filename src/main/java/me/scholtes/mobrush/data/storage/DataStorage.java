@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class DataStorage {
 
@@ -61,6 +62,14 @@ public class DataStorage {
      */
     public GamePlayer getGamePlayer(UUID uuid) {
         return players.get(uuid);
+    }
+
+    /**
+     * Lets you use a consumer for the GamePlayer
+     * Still need to manually save
+     */
+    public void useGamePlayer(UUID uuid, Consumer<GamePlayer> consumer) {
+        consumer.accept(players.get(uuid));
     }
 
 }
